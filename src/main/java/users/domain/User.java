@@ -20,10 +20,21 @@ public class User {
     private String firstName;
 
     @Indexed
-    private String middle;
+    private String lastName;
 
     @Indexed
-    private String lastName;
+    private String username;
+
+    @Indexed
+    private int statId;
+
+    @Indexed
+    private String email;
+
+    @Indexed
+    private boolean isAdmin;
+
+
 
     //test change
 
