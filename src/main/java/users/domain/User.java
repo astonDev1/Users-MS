@@ -25,4 +25,6 @@ public class User {
     @Indexed
     private String lastName;
 
+    //test change
+
 }
