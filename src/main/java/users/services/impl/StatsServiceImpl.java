@@ -20,6 +20,11 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
+    public Stats findStatsById(String id) {
+        return statsRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Stats saveStats(Stats stats) {
         return statsRepository.save(stats);
     }

@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Stats {
 
     @Id
-    public int id;
+    public String id;
 
     @Indexed
     private int wins;
