@@ -17,8 +17,8 @@ public class Profile {
 
     private String role;
     private String userName;
-    private Integer gamesPlayed;
-    private Integer avgPercent;
+    private Integer gamesPlayed;    private Integer avgPercent;
+
     private String bestCategory;
 
 

@@ -2,6 +2,7 @@ package users.services.impl;
 
 import org.springframework.stereotype.Service;
 import users.domain.Stats;
+import users.domain.User;
 import users.repositories.StatsRepository;
 import users.services.StatsService;
 
@@ -23,6 +24,7 @@ public class StatsServiceImpl implements StatsService {
     public Stats findStatsById(String id) {
         return statsRepository.findById(id).orElse(null);
     }
+
 
     @Override
     public Stats saveStats(Stats stats) {

@@ -6,7 +6,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import users.domain.Stats;
 import users.domain.User;
+import users.services.StatsService;
 import users.services.UserService;
 
 
@@ -18,6 +20,7 @@ public class UserController {
 
     Environment environment;
     UserService userService;
+    StatsService statsService;
     public UserController(Environment environment, UserService userService){
         this.environment = environment;
         this.userService = userService;
@@ -39,6 +42,35 @@ public class UserController {
         log.info("Users Found");
         return ResponseEntity.status(HttpStatus.OK).body(foundUsers);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable String id){
+        User foundUser = userService.findUserById(id);
+        try{
+            if(foundUser == null){
+                log.info("User not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            log .info("Users Found");
+        } catch (StackOverflowError stack){
+            log.info("Stack overflow :(");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(foundUser);
+
+    }
+
+    @GetMapping("/stats/{userStats}")
+    public ResponseEntity<Stats> userStats(@PathVariable String userStats){
+        Stats stats = userService.findUsersStats(userStats);
+        if (stats == null) {
+            log.info("User stats not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(stats);
+
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(stats);
+
+    }
+
     @PostMapping("/")
     public ResponseEntity<User> createUser(@RequestBody User user){
         User createdUser = userService.saveUser(user);

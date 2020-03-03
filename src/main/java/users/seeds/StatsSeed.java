@@ -20,8 +20,8 @@ public class StatsSeed implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event){
-        mongoTemplate.getDb().drop();
-        seedStatsTable();
+//        mongoTemplate.getDb().drop();
+//        seedStatsTable();
     };
 
 

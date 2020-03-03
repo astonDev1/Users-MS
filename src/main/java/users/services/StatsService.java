@@ -1,10 +1,13 @@
 package users.services;
 
 
+import org.springframework.stereotype.Service;
 import users.domain.Stats;
+import users.domain.User;
 
 import java.util.List;
 
+@Service
 public interface StatsService {
 
     Iterable<Stats> findAllStats();

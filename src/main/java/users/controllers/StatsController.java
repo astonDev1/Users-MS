@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import users.domain.Stats;
 import users.domain.User;
 import users.services.StatsService;
@@ -47,19 +44,29 @@ public class StatsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Stats> getStatsById(@PathVariable String id) throws Exception {
+    public ResponseEntity<Stats> getStatsById(@PathVariable String id) {
         Stats statsById = statsService.findStatsById(id);
 
-        try {
-            if (statsById == null) {
-                log.info("unable to find that stats with that id");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-        } catch (StackOverflowError stack) {
-            log.info("Stack overflow error");
+        if (statsById == null) {
+            log.info("unable to find that stats with that id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
+
         return ResponseEntity.status(HttpStatus.OK).body(statsById);
+    }
+
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Stats> postGivenStats(@RequestBody Stats stats) {
+        Stats createdStats = statsService.saveStats(stats);
+
+        if (createdStats.getId().equals("") || createdStats.getId() == null) {
+            log.info("Bad Stats creation, stats not created!");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(createdStats);
+        }
+        log.info("Stats " + " " + createdStats.getId() + " " +"created and inserted successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdStats);
     }
 
 

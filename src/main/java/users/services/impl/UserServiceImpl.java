@@ -1,13 +1,19 @@
 package users.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import users.domain.Stats;
 import users.domain.User;
 import users.repositories.UserRepository;
+import users.services.StatsService;
 import users.services.UserService;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    StatsService statsService;
 
 
     UserRepository userRepository;
@@ -23,6 +29,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(String id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Stats findUsersStats(String statsId) {
+        Iterable<Stats> allStats = statsService.findAllStats();
+
+        for(Stats stats : allStats) {
+            if(statsId.equals(statsService.findStatsById(statsId).getId())){
+                return statsService.findStatsById(statsId);
+            }
+        }
+
+        return null;
     }
 
     @Override
