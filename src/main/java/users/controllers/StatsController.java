@@ -69,5 +69,15 @@ public class StatsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStats);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteStats(@PathVariable String id){
+        Stats statsToDelete = statsService.findStatsById(id);
+        if(statsToDelete == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("Error deleting stats!!!"));
+        }
+        statsService.deleteStats(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Stats deleted successfully");
+    }
+
 
 }

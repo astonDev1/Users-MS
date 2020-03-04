@@ -23,8 +23,6 @@ public class Stats {
     @Indexed
     private int losses;
 
-    @Indexed
-    private int gamesPlayed;
 
     //region: getters and setters
 
@@ -52,13 +50,6 @@ public class Stats {
         this.losses = losses;
     }
 
-    public int getGamesPlayed() {
-        return gamesPlayed;
-    }
-
-    public void setGamesPlayed(int gamesPlayed) {
-        this.gamesPlayed = gamesPlayed;
-    }
     //endregion
 }
 

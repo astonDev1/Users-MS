@@ -82,5 +82,35 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
+    @PatchMapping("/")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        User userToUpdate = userService.findUserById(user.getId());
+
+        try{
+            if (userToUpdate.getId().equals("") || userToUpdate.equals(null)){
+                log.info("User not found!!!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userToUpdate);
+            }
+        } catch (NullPointerException nullP){
+            log.info("null pointer exception");
+        }
+
+        userService.saveUser(user);
+
+        userToUpdate = userService.findUserById(user.getId());
+
+        log.info("User " + " " + userToUpdate.getFirstName() + " " + "updated successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(userToUpdate);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletedUser(@PathVariable String id){
+        User deletedUser = userService.findUserById(id);
+        if (deletedUser == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error deleting user!!!");
+        }
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");
+    }
 
 }
